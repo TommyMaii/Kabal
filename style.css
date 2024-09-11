@@ -1,0 +1,102 @@
+.Maindeck{
+
+
+}
+
+.Row {
+
+    display:table;
+    width: 100%;
+    table-layout: fixed;
+    padding-bottom: 50px;
+    position:relative;
+
+}
+
+#deckCard1{
+    position: absolute;
+    top:20px;
+    left:20px;
+}
+#deckCard2{
+    position: absolute;
+    top:20px;
+    left:80px;
+
+}
+#deckCard3{
+    position: absolute;
+    top:20px;
+    left:140px;
+
+}
+#S1{
+    position: absolute;
+    left:720px;
+    top:-10px;
+}
+#S2{
+    position: absolute;
+    left:870px;
+    top:-10px;
+}
+#S3{
+    position: absolute;
+    top:-10px;
+    left:1020px;
+
+}
+#S4{
+    position: absolute;
+    top:-10px;
+    left:1170px;
+
+}
+
+#bottomRow{
+    top:300px;
+    display:grid;
+    grid-template-columns: repeat(7,200px);
+    width: 1000px;
+}
+
+.layer1{
+    position:absolute;
+
+}
+
+.layer2{
+    position:absolute;
+    top:50px;
+
+}
+
+.layer3{
+    position:absolute;
+    top:85px;
+
+}
+
+.layer4{
+    position:absolute;
+    top:115px;
+
+}
+
+.layer5{
+    position:absolute;
+    top:145px;
+
+}
+
+.layer6{
+    position:absolute;
+    top:185px;
+
+}
+
+.layer7{
+    position:absolute;
+    top:215px;
+
+}
