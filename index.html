@@ -85,9 +85,6 @@
                 let className = 1;
                 document.getElementById("bottomRow").innerHTML += /*HTML*/ `<div class="Column" id="${id}"></div>`
                 for(i = 0; i <length; i++){
-                    if(!shown){
-                        
-                    }
                     let cardSuit = cardStructure[2].row3[i].cardSuit;
                     let cardValue = cardStructure[2].row3[i].cardValue;
                     playedCards.push(cardValue + "_of_" + cardSuit);

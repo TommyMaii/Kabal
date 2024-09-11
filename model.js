@@ -157,7 +157,7 @@ let cardStructure = [
             shown: true,
         },
     ] },
-    {row9: [
+    {'row9': [
         {
             cardSuit: "Hearts",
             cardValue: '3',
