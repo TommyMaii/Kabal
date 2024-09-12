@@ -100,3 +100,42 @@
     top:215px;
 
 }
+#column1{
+    position:absolute;
+    left:30px;
+}
+
+#column2{
+    position:absolute;
+    left:170px;
+}
+
+#column3{
+    position:absolute;
+    left:310px;
+
+}
+
+#column4{
+    position:absolute;
+    left:450px;
+
+}
+
+#column5{
+    position:absolute;
+    left:590px;
+
+}
+
+#column6{
+    position:absolute;
+    left:730px;
+
+}
+
+#column7{
+    position:absolute;
+    left:870px;
+
+}
