@@ -3,17 +3,22 @@ let swappedCard;
 let playedCards = [];
 let randomType;
 let firstTime = true;
-let cardSuit = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-let cardValue = ['King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2', 'Ace']
-let cardBack = 'cardbackred'
+const cardSuit = {0: "Spades", 1: "Clubs", 2: "Diamonds", 3:"Hearts"}
+const cardValue = {12:'King', 11:'Queen', 10:'Jack', 9:'10', 8:'9', 7:'8', 6:'7', 5:'6', 4:'5', 3:'4', 2:'3', 1:'2', 0:'Ace'}
+const cardBack = 'cardbackred'
+let allCardsList = [];
 
+
+//Tested different methods
 let cardStructure = {
     // Example Structure
     // "row1": [
-    //     // {
-    //     //     cardSuit: "Clubs2",
-    //     //     cardValue: 'Jack',
-    //     //     shown: true,
-    //     // },
+        // {
+        //     cardSuit: "Clubs2",
+        //     cardValue: 'Jack',
+        //     shown: true,
+        // },
     // ],
 }
+
+let deckStructure = {}

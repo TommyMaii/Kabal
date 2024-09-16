@@ -15,19 +15,16 @@
 
 #deckCard1{
     position: absolute;
-    top:20px;
     left:20px;
 }
 #deckCard2{
     position: absolute;
-    top:20px;
-    left:80px;
+    left:60px;
 
 }
 #deckCard3{
     position: absolute;
-    top:20px;
-    left:140px;
+    left:120px;
 
 }
 #S1{
@@ -73,31 +70,31 @@
 
 .layer3{
     position:absolute;
-    top:85px;
+    top:100px;
 
 }
 
 .layer4{
     position:absolute;
-    top:115px;
+    top:150px;
 
 }
 
 .layer5{
     position:absolute;
-    top:145px;
+    top:200px;
 
 }
 
 .layer6{
     position:absolute;
-    top:185px;
+    top:250px;
 
 }
 
 .layer7{
     position:absolute;
-    top:215px;
+    top:300px;
 
 }
 #column1{
