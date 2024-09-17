@@ -19,14 +19,29 @@
 }
 #deckCard2{
     position: absolute;
-    left:60px;
+    left:50px;
 
 }
 #deckCard3{
     position: absolute;
-    left:120px;
+    left:80px;
 
 }
+#shownDeckCard1{
+    position: absolute;
+    left:250px;
+}
+#shownDeckCard2{
+    position: absolute;
+    left:300px;
+
+}
+#shownDeckCard3{
+    position: absolute;
+    left:350px;
+
+}
+
 #S1{
     position: absolute;
     left:720px;

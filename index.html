@@ -36,41 +36,34 @@
 
         <script>
             //Model
-           let count = 0;
-
 
             //View
-            generateCardDeckData();
             function updateView(){
                 createBottomColumnsHTML();
                 createTopColumnsHTML();
             }
 
+            //Add Comment
             function createTopColumnsHTML(){
                 let topRowHTML = document.getElementById("topRow");
-                let tempString;
-                let count = 1;
-                for(i = 0; i < 28; i++){
-                    getCurrentCardDeck(i);
-                    count++;
-                    if(count==4){count = 1}
-                    console.log(deckStructure[0].isShown);
-                    if(deckStructure[0].isShown == false){ `<div><div id="deckCard${count}"><img src="../images/images/cardbackred.png.png" width="135" height="225" onclick="swapCards(this)"></div></div>`}
-                    else{tempString = `<div><div id="deckCard${count}"><img src="../images/${currentCard}.png" width="135" height="225" onclick="swapCards(this)"></div></div>`}
-                    topRowHTML.innerHTML += tempString;
-                }
 
-                for(i = 0; i < 4; i++){
-                    tempString = `<div><div id="S${i+1}"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div></div>`
-                    topRowHTML.innerHTML += tempString;
+                topRowHTML.innerHTML = `<div onclick="makeShowDeckCards()"><img id="deckCard1" src="../images/cardbackred.png" width="135" height="225" onclick="">
+                                        <img id="deckCard2" src="../images/cardbackred.png" width="135" height="225" onclick="">
+                                        <img id="deckCard3" src="../images/cardbackred.png" width="135" height="225" onclick=""></div>`
+
+                for(i = 1; i <4; i++){
+                    makeThreeCardDeckHTML(i, runs);
+                    runs++;
                 }
+                
+                topRowHTML.innerHTML += `<div id="S1"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>
+                                        <div id="S2"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>
+                                        <div id="S3"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>
+                                        <div id="S4"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>`
 
             }
 
-            //This function creates the HTML for the 7 columns of playing cards on the bottom half of the page
-            //It also assigns columnId's and layerID's.
-            //It uses the currentCard variable which gets assigned in getCurrentCardBottomRow function, to know which card to display.
-            //the first for loop creates div that contains the cards that are made in the 2nd loop.
+            //Add Comment
             function createBottomColumnsHTML(){
                 let tempString = '';
                 for(i = 0; i < 7; i++){
@@ -78,7 +71,7 @@
                     let className = 1; 
                     tempString += `<div class="Column" id="${'column'+(i+1)}">`
                     for(y= 0; y <= i; y++){
-                    if(checkDuplicateCards(count)){}
+                    if(checkDuplicateCards()){}
                     getCurrentCardBottomRow(i, y);
                     columnIndex++;
                     tempString += `<div class="layer${className++}"><img src="../images/${currentCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`  
@@ -88,8 +81,7 @@
                 document.getElementById("bottomRow").innerHTML = tempString;
             }
 
-            //App starts with this function which makes a list of 52 cards using the nested for loops.
-            //Then we use the shuffle method to randomize the list.
+            //Add Comment
             makeRandomCardList();
             function makeRandomCardList(){
                 for(i = 0; i < 4; i++){
@@ -102,7 +94,15 @@
                 updateView();
             }
 
-            //This function       
+            //Add Comment
+            function makeThreeCardDeckHTML(shownDeckCardNumber, iterationss){
+                if(firstTime == true)return
+                if(iterationss == 52){return runs = 28;}
+                getCurrentCardDeck(iterationss)
+                document.getElementById("topRow").innerHTML += `<div id="shownDeckCard${shownDeckCardNumber}"><img src="../images/${currentCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`
+            }
+
+            //Add Comment  
             function generateCardColumnData(){
                 for(i = 0; i < 7; i++){
                     let rowList = [];
@@ -117,7 +117,10 @@
                 }
                 cardStructure['row'+(i+1)] = rowList;
             }
+
+            //Add Comment
             }
+            generateCardDeckData();
             function generateCardDeckData(){
                     for(i= 0; i < allCardsList.length; y++){
                     let obj = {};
@@ -128,14 +131,13 @@
                     allCardsList.pop();
                 }
                 deckStructure = playedCards;
-                console.log(deckStructure);
             }
             
             //This shuffle method takes a list
             //It goes through the list from the highest index then down.
             //tempValue always gets the value of the last index in randList
             //We then assign the value in the random index we get from the variable j
-            //to the last index in the randList then the random index gets the value of I
+            //to the last index in the randList then the random index gets the value of I                
             //aka the last index of the randList
             function shuffle(randList){
                 for(let i = randList.length -1; i >= 0; i--){
@@ -147,8 +149,13 @@
             }
 
             //Controller
+            //Add Comment
+            function makeShowDeckCards(){
+                firstTime = false;
+                updateView();
+            }
+
             function swapCards(element){
-                
             }
 
             function checkDuplicateCards(index){
@@ -164,9 +171,9 @@
                 return currentCard = cV + '_of_' + cS;
             }
             function getCurrentCardDeck(index){
-                let cV = cardValue[deckStructure[index].cardValues];
-                let cS = cardSuit[deckStructure[index].cardSuits];
-                return currentCard = cV + '_of_' + cS;
+                let cVs = cardValue[deckStructure[index].cardValues];
+                let cSs = cardSuit[deckStructure[index].cardSuits];
+                return currentCard = cVs + '_of_' + cSs;
             }
 
 
