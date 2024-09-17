@@ -71,10 +71,9 @@
                     let className = 1; 
                     tempString += `<div class="Column" id="${'column'+(i+1)}">`
                     for(y= 0; y <= i; y++){
-                    if(checkDuplicateCards()){}
                     getCurrentCardBottomRow(i, y);
                     columnIndex++;
-                    tempString += `<div class="layer${className++}"><img src="../images/${currentCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`  
+                    tempString += `<div class="layer${className++}"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`  
                     }
                     tempString += `</div>`
                 }
@@ -99,7 +98,7 @@
                 if(firstTime == true)return
                 if(iterationss == 52){return runs = 28;}
                 getCurrentCardDeck(iterationss)
-                document.getElementById("topRow").innerHTML += `<div id="shownDeckCard${shownDeckCardNumber}"><img src="../images/${currentCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`
+                document.getElementById("topRow").innerHTML += `<div id="shownDeckCard${shownDeckCardNumber}"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`
             }
 
             //Add Comment  
@@ -117,9 +116,10 @@
                 }
                 cardStructure['row'+(i+1)] = rowList;
             }
-
-            //Add Comment
-            }
+            console.log(cardStructure);
+        }
+        
+        //Add Comment
             generateCardDeckData();
             function generateCardDeckData(){
                     for(i= 0; i < allCardsList.length; y++){
@@ -156,11 +156,20 @@
             }
 
             function swapCards(element){
+                let card = {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
+                let swappedCard = {...cardStructure[cardStructure.swappedCard.row][cardStructure.swappedCard.index]};
+
+                if(card.cardSuit == 0 && swappedCard.cardSuit == 1)return
+                if(card.cardSuit == 1 && swappedCard.cardSuit == 0)return
+                if(card.cardSuit == 2 && swappedCard.cardSuit == 3)return
+                if(card.cardSuit == 3 && swappedCard.cardSuit == 2)return
+
+                cardStructure[cardStructure.swappedCard.row].push(card);
+                cardStructure[cardStructure.currentCard.row].splice(cardStructure.currentCard.index, 1);
+
+                console.log(cardStructure);
             }
 
-            function checkDuplicateCards(index){
-
-            }
 
             //This function takes the number values from the objects in playedCards[index]
             //and gets the actual text values we have defined in the objects in cardValue and cardSuit list
@@ -168,12 +177,12 @@
                 let row = "row"+(rowIndex+1);
                 let cV = cardValue[cardStructure[row][columnIndex].cardValues];
                 let cS = cardSuit[cardStructure[row][columnIndex].cardSuits];
-                return currentCard = cV + '_of_' + cS;
+                return currentGeneratedCard = cV + '_of_' + cS;
             }
             function getCurrentCardDeck(index){
                 let cVs = cardValue[deckStructure[index].cardValues];
                 let cSs = cardSuit[deckStructure[index].cardSuits];
-                return currentCard = cVs + '_of_' + cSs;
+                return currentGeneratedCard = cVs + '_of_' + cSs;
             }
 
 

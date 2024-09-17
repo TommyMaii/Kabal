@@ -1,5 +1,4 @@
-let currentCard;
-let swappedCard;
+let currentGeneratedCard;
 let playedCards = [];
 let firstTime = true;
 const cardSuit = {0: "Spades", 1: "Clubs", 2: "Diamonds", 3:"Hearts"}
@@ -11,6 +10,14 @@ let runs = 28;
 
 //Tested different methods
 let cardStructure = {
+    currentCard : {
+        row: "row2",
+        index: 1
+    },
+    swappedCard : {
+        row: "row1",
+        index: 1,
+    },
     // Example Structure
     // "row1": [
         // {
@@ -33,3 +40,6 @@ let deckStructure = {
 //             shown: true,
 //    }]
 }
+
+
+
