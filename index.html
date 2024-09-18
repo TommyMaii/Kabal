@@ -38,6 +38,10 @@
             //Model
 
             //View
+            createRandomCardList();
+            createCardColumnData();
+            createCardDeckData();
+            updateView();
             function updateView(){
                 createBottomColumnsHTML();
                 createTopColumnsHTML();
@@ -52,28 +56,29 @@
                                         <img id="deckCard3" src="../images/cardbackred.png" width="135" height="225" onclick=""></div>`
 
                 for(i = 1; i <4; i++){
-                    makeThreeCardDeckHTML(i, runs);
+                    createThreeCardDeckHTML(i, runs);
                     runs++;
                 }
                 
-                topRowHTML.innerHTML += `<div id="S1"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>
-                                        <div id="S2"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>
-                                        <div id="S3"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>
-                                        <div id="S4"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards(this)"></div>`
+                topRowHTML.innerHTML += `<div id="S1"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards()"></div>
+                                        <div id="S2"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards()"></div>
+                                        <div id="S3"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards()"></div>
+                                        <div id="S4"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards()"></div>`
 
             }
 
             //Add Comment
             function createBottomColumnsHTML(){
                 let tempString = '';
+                let rowCounter = 0;
                 for(i = 0; i < 7; i++){
-                    let columnIndex = 0;
                     let className = 1; 
-                    tempString += `<div class="Column" id="${'column'+(i+1)}">`
-                    for(y= 0; y <= i; y++){
-                    getCurrentCardBottomRow(i, y);
-                    columnIndex++;
-                    tempString += `<div class="layer${className++}"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`  
+                    rowCounter++;
+                    let row = 'row'+(rowCounter);
+                    tempString += `<div class="Column" id="${'row'+(rowCounter)}" onclick="swapCards(this)">`
+                    for(y= 0; y < cardStructure[row].length; y++){
+                    getCurrentCardBottomRow(rowCounter, y);
+                    tempString += `<div class="layer${className++}" ><img src="../images/${currentGeneratedCard}.png" width="135" height="225" ></div>`  
                     }
                     tempString += `</div>`
                 }
@@ -81,32 +86,30 @@
             }
 
             //Add Comment
-            makeRandomCardList();
-            function makeRandomCardList(){
+            function createRandomCardList(){
                 for(i = 0; i < 4; i++){
                     for(y = 0; y < 13; y++){
                         allCardsList.push({cardSuit: i, cardValue: y})
                     }
                 }
                 shuffle(allCardsList);
-                generateCardColumnData();
-                updateView();
+
             }
 
             //Add Comment
-            function makeThreeCardDeckHTML(shownDeckCardNumber, iterationss){
+            function createThreeCardDeckHTML(shownDeckCardNumber, iterationss){
                 if(firstTime == true)return
                 if(iterationss == 52){return runs = 28;}
                 getCurrentCardDeck(iterationss)
-                document.getElementById("topRow").innerHTML += `<div id="shownDeckCard${shownDeckCardNumber}"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" onclick="swapCards(this)"></div>`
+                document.getElementById("topRow").innerHTML += `<div id="shownDeckCard${shownDeckCardNumber}" onclick="swapCards(this)"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" ></div>`
             }
 
             //Add Comment  
-            function generateCardColumnData(){
+            function createCardColumnData(){
                 for(i = 0; i < 7; i++){
                     let rowList = [];
                     for(y= 0; y <= i; y++){
-                    let obj = {};
+                    const obj = {};
                     obj['cardSuits'] = allCardsList[allCardsList.length-1].cardSuit;
                     obj['cardValues'] = allCardsList[allCardsList.length-1].cardValue;
                     obj['isShown'] = false;
@@ -120,10 +123,9 @@
         }
         
         //Add Comment
-            generateCardDeckData();
-            function generateCardDeckData(){
+            function createCardDeckData(){
                     for(i= 0; i < allCardsList.length; y++){
-                    let obj = {};
+                    const obj = {};
                     obj['cardSuits'] = allCardsList[allCardsList.length-1].cardSuit;
                     obj['cardValues'] = allCardsList[allCardsList.length-1].cardValue;
                     obj['isShown'] = false;
@@ -156,25 +158,29 @@
             }
 
             function swapCards(element){
+                let findClass = document.querySelector('#'+element.id); 
+                let images = findClass.children.length;
+
+                cardStructure.currentCard.row = element.id;
+                cardStructure.currentCard.index = images - 1; 
+
+                // cardStructure.swappedCard.row = element.id;
+                // cardStructure.swappedCard.index = images - 1; 
+
                 let card = {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
                 let swappedCard = {...cardStructure[cardStructure.swappedCard.row][cardStructure.swappedCard.index]};
 
-                if(card.cardSuit == 0 && swappedCard.cardSuit == 1)return
-                if(card.cardSuit == 1 && swappedCard.cardSuit == 0)return
-                if(card.cardSuit == 2 && swappedCard.cardSuit == 3)return
-                if(card.cardSuit == 3 && swappedCard.cardSuit == 2)return
+                if(colors[card.cardSuits] === colors[swappedCard.cardSuits])return
 
                 cardStructure[cardStructure.swappedCard.row].push(card);
                 cardStructure[cardStructure.currentCard.row].splice(cardStructure.currentCard.index, 1);
 
-                console.log(cardStructure);
+                updateView();
+
             }
 
-
-            //This function takes the number values from the objects in playedCards[index]
-            //and gets the actual text values we have defined in the objects in cardValue and cardSuit list
             function getCurrentCardBottomRow(rowIndex, columnIndex){
-                let row = "row"+(rowIndex+1);
+                let row = 'row'+(rowIndex);
                 let cV = cardValue[cardStructure[row][columnIndex].cardValues];
                 let cS = cardSuit[cardStructure[row][columnIndex].cardSuits];
                 return currentGeneratedCard = cV + '_of_' + cS;
@@ -184,9 +190,7 @@
                 let cSs = cardSuit[deckStructure[index].cardSuits];
                 return currentGeneratedCard = cVs + '_of_' + cSs;
             }
-
-
-
+            
         </script>
         
     </body>
