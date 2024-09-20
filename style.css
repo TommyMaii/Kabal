@@ -27,16 +27,16 @@
     left:80px;
 
 }
-#shownDeckCard1{
+.shownDeckCard1{
     position: absolute;
     left:250px;
 }
-#shownDeckCard2{
+.shownDeckCard2{
     position: absolute;
     left:300px;
 
 }
-#shownDeckCard3{
+.shownDeckCard3{
     position: absolute;
     left:350px;
 

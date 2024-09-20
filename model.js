@@ -7,6 +7,10 @@ const cardBack = 'cardbackred'
 const allCardsList = []
 let runs = 28;
 let colors = {0: 'black', 1: 'black', 2: 'red', 3: 'red'};
+let isFirstClick = false;
+const deckCardList = []
+let tempValue;
+let usedId;
 
 
 //Tested different methods
@@ -15,8 +19,7 @@ let cardStructure = {
 
     },
     swappedCard : {
-        row: "row1",
-        index: 1,
+
     },
     // Example Structure
     // "row1": [
@@ -33,8 +36,8 @@ let deckStructure = {
 //             cardSuits: "Clubs2",
 //             cardValues: 'Jack',
 //             shown: true,
-//    }]
-//     [{
+//    },
+//     {
 //             cardSuits: "Clubs2",
 //             cardValues: 'Jack',
 //             shown: true,

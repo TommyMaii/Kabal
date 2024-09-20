@@ -57,7 +57,6 @@
 
                 for(i = 1; i <4; i++){
                     createThreeCardDeckHTML(i, runs);
-                    runs++;
                 }
                 
                 topRowHTML.innerHTML += `<div id="S1"><img src="../images/PlayingCard_of_Blank.png" width="185" height="265" onclick="swapCards()"></div>
@@ -99,10 +98,12 @@
             //Add Comment
             function createThreeCardDeckHTML(shownDeckCardNumber, iterationss){
                 if(firstTime == true)return
-                if(iterationss == 52){return runs = 28;}
+                if(iterationss == playedCards.length-1){return runs = 28;}
                 getCurrentCardDeck(iterationss)
-                document.getElementById("topRow").innerHTML += `<div id="shownDeckCard${shownDeckCardNumber}" onclick="swapCards(this)"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" ></div>`
+                document.getElementById("topRow").innerHTML += `<div class="shownDeckCard${shownDeckCardNumber}" id="index${runs}" onclick="swapCards(this)"><img src="../images/${currentGeneratedCard}.png" width="135" height="225" ></div>`
+                runs++;
             }
+
 
             //Add Comment  
             function createCardColumnData(){
@@ -113,6 +114,7 @@
                     obj['cardSuits'] = allCardsList[allCardsList.length-1].cardSuit;
                     obj['cardValues'] = allCardsList[allCardsList.length-1].cardValue;
                     obj['isShown'] = false;
+                    obj['topRow'] = false;
                     rowList.push(obj);
                     playedCards.push(obj);
                     allCardsList.pop();
@@ -129,8 +131,10 @@
                     obj['cardSuits'] = allCardsList[allCardsList.length-1].cardSuit;
                     obj['cardValues'] = allCardsList[allCardsList.length-1].cardValue;
                     obj['isShown'] = false;
+                    obj['topRow'] = true;
                     playedCards.push(obj);
                     allCardsList.pop();
+                    deckCardList.push(obj);
                 }
                 deckStructure = playedCards;
             }
@@ -160,24 +164,85 @@
             function swapCards(element){
                 let findClass = document.querySelector('#'+element.id); 
                 let images = findClass.children.length;
+                let filteredId = element.id.replace(/[a-z]/gi,"");
+                
+                if(isFirstClick === false && deckStructure[filteredId].topRow === true){
+                    usedId = filteredId;
+                    tempValue = deckStructure[usedId];
+                    isFirstClick = true;
+                }   
+                else if(isFirstClick === false && cardStructure[element.id][findClass.children.length -1].topRow === false){
+                    isFirstClick = true;
+                    cardStructure.currentCard.row = element.id;
+                    cardStructure.currentCard.index = images - 1; 
+                }   
+                else if(isFirstClick === true ){
+                cardStructure.swappedCard.row = element.id;
+                cardStructure.swappedCard.index = images - 1;
 
-                cardStructure.currentCard.row = element.id;
-                cardStructure.currentCard.index = images - 1; 
-
-                // cardStructure.swappedCard.row = element.id;
-                // cardStructure.swappedCard.index = images - 1; 
-
-                let card = {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
                 let swappedCard = {...cardStructure[cardStructure.swappedCard.row][cardStructure.swappedCard.index]};
+                let currentCard = tempValue ? tempValue : {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
 
-                if(colors[card.cardSuits] === colors[swappedCard.cardSuits])return
+                if((isLegalSuits(currentCard, swappedCard)) === false)return;
 
-                cardStructure[cardStructure.swappedCard.row].push(card);
-                cardStructure[cardStructure.currentCard.row].splice(cardStructure.currentCard.index, 1);
+                cardStructure[cardStructure.swappedCard.row].push(currentCard);
+                
+                removeCardAfterSwap(currentCard, cardStructure.currentCard.row, cardStructure.currentCard.index);
 
+                tempValue = null;
+                isFirstClick = false;
                 updateView();
-
             }
+            }
+
+            function isLegalSuits(firstChosenCard, secondChosenCard){
+                if(colors[firstChosenCard.cardSuits] === colors[secondChosenCard.cardSuits]){ 
+                    let firstChosenCard = {};
+                    let secondChosenCard = {};
+                    isFirstClick = false;
+                    return false;
+                }
+            }
+
+            function removeCardAfterSwap(firstChosenCard, firstChosenCardRow, firstChosenCardIndex){
+                if(firstChosenCard.topRow == false){
+                        cardStructure[firstChosenCardRow].splice(firstChosenCardIndex, 1);
+                    }else {
+                        firstChosenCard.topRow = false;
+                        deckStructure.splice(usedId,1);
+                    }
+            }
+
+            // function swapTopRowCard(element){
+            //     console.log(element)
+            //     let findClass = document.querySelector('#'+element.id); 
+            //     let images = findClass.children.length;
+
+            //     if(isFirstClick == false){
+            //     let tempValue = deckStructure[runs];
+            //     isFirstClick = true;
+            //     }   
+            //     else if(isFirstClick == true){
+            //     cardStructure.swappedCard.row = element.id;
+            //     cardStructure.swappedCard.index = images - 1; 
+
+            //     swappedCard = tempValue;
+            //     let card = {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
+
+            //     if(colors[card.cardSuits] === colors[swappedCard.cardSuits]){ 
+            //         let swappedCard = {};
+            //         let card = {};
+            //         return isFirstClick = false;
+            //         }  
+
+            //     cardStructure[cardStructure.swappedCard.row].push(card);
+            //     cardStructure[cardStructure.currentCard.row].splice(cardStructure.currentCard.index, 1);
+            //     isFirstClick = false;
+            //     updateView();
+            // }
+            // }
+
+
 
             function getCurrentCardBottomRow(rowIndex, columnIndex){
                 let row = 'row'+(rowIndex);
