@@ -16,17 +16,6 @@
     <body>
 
         <div id="app">
-            <!--Dekk Topp Venstre, Høyre 4 kort stacks på samme rad -->
-            <!--Under er 7 rader med kort, økende fra venstre til høyre 1-7 kort stacks-->
-            <!--Bare opperste kortet er visible -->
-            <!--Logikk som fanner ut 3 kort -->
-            <!--Sette opp bilder for kort -->
-            <!--Kort logikk, angi ID -->
-            <!--Sette opp win condition -->
-            <!--Sette opp funksjoner som: Flytte på kort der det er valid,-->
-            <!--Sette opp kort animasjoner, card flip, spre ut kort -->
-            <!--28 cards outside and 24 cards in maindeck-->
-
             <div id="topRow">
             </div>
             <div id="bottomRow" class="Row"></div>
@@ -104,7 +93,6 @@
                 runs++;
             }
 
-
             //Add Comment  
             function createCardColumnData(){
                 for(i = 0; i < 7; i++){
@@ -139,13 +127,7 @@
                 deckStructure = playedCards;
             }
             
-            //This shuffle method takes a list
-            //It goes through the list from the highest index then down.
-            //tempValue always gets the value of the last index in randList
-            //We then assign the value in the random index we get from the variable j
-            //to the last index in the randList then the random index gets the value of I                
-            //aka the last index of the randList
-            function shuffle(randList){
+            function shuffleList(randList){
                 for(let i = randList.length -1; i >= 0; i--){
                     let j = Math.floor(Math.random() * (randList.length));
                     let tempValue = randList[i];
@@ -155,7 +137,6 @@
             }
 
             //Controller
-            //Add Comment
             function makeShowDeckCards(){
                 firstTime = false;
                 updateView();
@@ -212,37 +193,6 @@
                         deckStructure.splice(usedId,1);
                     }
             }
-
-            // function swapTopRowCard(element){
-            //     console.log(element)
-            //     let findClass = document.querySelector('#'+element.id); 
-            //     let images = findClass.children.length;
-
-            //     if(isFirstClick == false){
-            //     let tempValue = deckStructure[runs];
-            //     isFirstClick = true;
-            //     }   
-            //     else if(isFirstClick == true){
-            //     cardStructure.swappedCard.row = element.id;
-            //     cardStructure.swappedCard.index = images - 1; 
-
-            //     swappedCard = tempValue;
-            //     let card = {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
-
-            //     if(colors[card.cardSuits] === colors[swappedCard.cardSuits]){ 
-            //         let swappedCard = {};
-            //         let card = {};
-            //         return isFirstClick = false;
-            //         }  
-
-            //     cardStructure[cardStructure.swappedCard.row].push(card);
-            //     cardStructure[cardStructure.currentCard.row].splice(cardStructure.currentCard.index, 1);
-            //     isFirstClick = false;
-            //     updateView();
-            // }
-            // }
-
-
 
             function getCurrentCardBottomRow(rowIndex, columnIndex){
                 let row = 'row'+(rowIndex);
