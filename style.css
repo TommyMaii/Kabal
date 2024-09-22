@@ -16,57 +16,60 @@
 #deckCard1{
     position: absolute;
     left:20px;
+    top:50px;
 }
 #deckCard2{
     position: absolute;
     left:50px;
-
+    top:50px;
 }
 #deckCard3{
     position: absolute;
     left:80px;
+    top:50px;
 
 }
 .shownDeckCard1{
     position: absolute;
     left:250px;
+    top:50px;
 }
 .shownDeckCard2{
     position: absolute;
     left:300px;
-
+    top:50px;
 }
 .shownDeckCard3{
     position: absolute;
     left:350px;
-
+    top:50px;
 }
 
 #S1{
     position: absolute;
     left:720px;
-    top:-10px;
+    top:50px;
 }
 #S2{
     position: absolute;
     left:870px;
-    top:-10px;
+    top:50px;
 }
 #S3{
     position: absolute;
-    top:-10px;
+    top:50px;
     left:1020px;
 
 }
 #S4{
     position: absolute;
-    top:-10px;
+    top:50px;
     left:1170px;
 
 }
 
 #bottomRow{
-    top:300px;
+    top:400px;
     display:grid;
     grid-template-columns: repeat(7,200px);
     width: 1000px;
