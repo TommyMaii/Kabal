@@ -114,10 +114,12 @@
                 
             }
 
-            function createCardsForSRows(index,list){
+            function createCardsForSRows(index){
                 let tempString;
-                for(y = 0; y < 13; y++){
-                    getCardFromList(S1List,y);
+                let count = 0;
+                for(y = 0; y <= S1List.length; y++){
+                    getCardFromList(S1List,count);
+                    count++;
                     tempString = `<img src="../images/${currentGeneratedSRowCard}.png" width="135" height="225">`
                     document.getElementById('S'+(index+1)).innerHTML = tempString;
                 }
@@ -170,12 +172,55 @@
                 updateView();
             }
 
+            // function swapCards(element){
+            //     let findClass = document.querySelector('#'+element.id); 
+            //     let images = findClass.children.length;
+            //     let filteredId = element.id.replace(/[a-z]/gi,"");
+                
+            //     if(isFirstClick === false && cardStructure[element.id][findClass.children.length -1].topRow === false){
+            //         isFirstClick = true;
+            //         cardStructure.currentCard.row = element.id;
+            //         cardStructure.currentCard.index = images - 1; 
+            //     }   
+            //     else if(isFirstClick === true){
+            //     cardStructure.swappedCard.row = element.id;
+            //     cardStructure.swappedCard.index = images - 1;
+
+            //     console.log(cardStructure.swappedCard.row)
+            //     console.log(cardStructure.swappedCard.index)
+
+            //     if(cardStructure.swappedCard.row.includes("S") && S1List.length == 0){                
+            //         swappedCard = {};
+            //     }else if(cardStructure.swappedCard.row.includes("S") && S1List.length == 0){
+            //     swappedCard = S1List[S1List.length-1];}
+
+            //     let currentCard = tempValue ? tempValue : {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
+
+            //     if((isLegalSuits(currentCard, swappedCard)) === false)return;
+
+            //     // cardStructure[cardStructure.swappedCard.row].push(currentCard);
+            //     S1List.push(currentCard);
+            //     console.log(S1List);
+                
+            //     removeCardAfterSwap(currentCard, cardStructure.currentCard.row, cardStructure.currentCard.index);
+            //     tempValue = null;
+            //     isFirstClick = false;
+            //     updateView();
+            // }
+            // }
+
+
             function swapCards(element){
                 let findClass = document.querySelector('#'+element.id); 
                 let images = findClass.children.length;
                 let filteredId = element.id.replace(/[a-z]/gi,"");
                 
-                if(isFirstClick === false && cardStructure[element.id][findClass.children.length -1].topRow === false){
+                if(isFirstClick === false && deckStructure[filteredId].topRow === true){
+                    usedId = filteredId;
+                    tempValue = deckStructure[usedId];
+                    isFirstClick = true;
+                }   
+                else if(isFirstClick === false && cardStructure[element.id][findClass.children.length -1].topRow === false){
                     isFirstClick = true;
                     cardStructure.currentCard.row = element.id;
                     cardStructure.currentCard.index = images - 1; 
@@ -184,25 +229,31 @@
                 cardStructure.swappedCard.row = element.id;
                 cardStructure.swappedCard.index = images - 1;
 
-                if(S1List.length == 0){                
+
+                if(cardStructure.swappedCard.row.includes("S") && S1List.length == 0){                
                     swappedCard = {};
-                }else{
-                swappedCard = S1List[S1List.length-1];}
+                }else if(cardStructure.swappedCard.row.includes("S") && S1List.length == 0){
+                    swappedCard = S1List[S1List.length-1];}
+                else if(cardStructure.swappedCard.row.includes("r") == true){
+                    swappedCard = {...cardStructure[cardStructure.swappedCard.row][cardStructure.swappedCard.index]};
+                }
                 let currentCard = tempValue ? tempValue : {...cardStructure[cardStructure.currentCard.row][cardStructure.currentCard.index]};
 
                 if((isLegalSuits(currentCard, swappedCard)) === false)return;
 
-                // cardStructure[cardStructure.swappedCard.row].push(currentCard);
-                S1List.push(currentCard);
-                console.log(S1List);
-                
+                if(cardStructure.swappedCard.row.includes("S")){
+                    S1List.push(currentCard);
+                }else{
+                    cardStructure[cardStructure.swappedCard.row].push(currentCard);
+                }
+
                 removeCardAfterSwap(currentCard, cardStructure.currentCard.row, cardStructure.currentCard.index);
+
                 tempValue = null;
                 isFirstClick = false;
                 updateView();
             }
             }
-
 
             // // Working Version
             // function swapCards(element){
@@ -270,7 +321,6 @@
             }
             function getCardFromList(listName,index){
                 if(S1List.length == 0) return currentGeneratedSRowCard = 'PlayingCard_of_Blank';
-                console.log(S1List)
                 let cVss = cardValue[listName[index].cardValues];
                 let cSss = cardSuit[listName[index].cardSuits];
                 currentGeneratedSRowCard = cVss + '_of_' + cSss;
